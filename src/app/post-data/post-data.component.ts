@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { BlogPost } from '../BlogPost';
 import {PostService} from '../post.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-post-data',
@@ -11,7 +12,10 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 export class PostDataComponent implements OnInit, OnDestroy {
 
   post: BlogPost;
-  querySub: any;
+  private querySub: any;
+  commentName: string;
+  commentText: string;
+  data: any;
 
   constructor(private postData: PostService, private route: ActivatedRoute) { }
 
@@ -24,6 +28,17 @@ export class PostDataComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     if(this.querySub) this.querySub.unsubscribe();
+  }
+   submitComment(): void {
+    this.post.comments.push({ 
+      author: this.commentName,
+      comment: this.commentText,
+      date: new Date().toLocaleDateString()
+    });
+    this.data.updatePostById(this.post._id, this.post).subscribe( () => {
+      this.commentName = '';
+      this.commentText = '';
+    })
   }
 
 }
