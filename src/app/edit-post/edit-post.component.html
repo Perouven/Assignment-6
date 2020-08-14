@@ -29,7 +29,7 @@
                     [(ngModel)]="tags" name="tags" required></textarea>
                 </div> 
                 <div class="pull-right">
-                    <button type="button" class="btn btn-danger btn-sm">Delete Post</button>
+                    <button class="btn btn-danger btn-sm" (click)="deletePost()">Delete Post</button>
                      &nbsp; 
                      <button type="submit" class="btn btn-success btn-sm"
                      (click)="formSubmit(f)">Update Post</button>
